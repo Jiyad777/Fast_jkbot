@@ -1,7 +1,7 @@
 import re
 from pyrogram import filters, Client, enums
 from pyrogram.errors.exceptions.bad_request_400 import ChannelInvalid, UsernameInvalid, UsernameNotModified
-from info import ADMINS, LOG_CHANNEL, FILE_STORE_CHANNEL, PUBLIC_FILE_STORE
+from info import ADMINS, LOG_CHANNEL, PUBLIC_FILE_STORE
 from database.ia_filterdb import unpack_new_file_id
 from utils import temp
 import re
@@ -13,14 +13,8 @@ import logging
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
-async def allowed(_, __, message):
-    if PUBLIC_FILE_STORE:
-        return True
-    if message.from_user and message.from_user.id in ADMINS:
-        return True
-    return False
 
-@Client.on_message(filters.command(['link', 'plink']) & filters.create(allowed))
+@Client.on_message(filters.command(['link', 'plink']) & filters.user(allowed))
 async def gen_link_s(bot, message):
     replied = message.reply_to_message
     if not replied:
@@ -37,7 +31,7 @@ async def gen_link_s(bot, message):
     await message.reply(f"Here is your Link:\nhttps://t.me/{temp.U_NAME}?start={outstr}")
     
     
-@Client.on_message(filters.command(['batch', 'pbatch']) & filters.create(allowed))
+@Client.on_message(filters.command(['batch', 'pbatch']) & filters.user(ADMINS))
 async def gen_link_batch(bot, message):
     if " " not in message.text:
         return await message.reply("Use correct format.\nExample <code>/batch https://t.me/TeamEvamaria/10 https://t.me/TeamEvamaria/20</code>.")
@@ -74,7 +68,7 @@ async def gen_link_batch(bot, message):
         return await message.reply(f'Errors - {e}')
 
     sts = await message.reply("Generating link for your message.\nThis may take time depending upon number of messages")
-    if chat_id in FILE_STORE_CHANNEL:
+    if chat_id in LOG_CHANNEL:
         string = f"{f_msg_id}_{l_msg_id}_{chat_id}_{cmd.lower().strip()}"
         b_64 = base64.urlsafe_b64encode(string.encode("ascii")).decode().strip("=")
         return await sts.edit(f"Here is your link https://t.me/{temp.U_NAME}?start=DSTORE-{b_64}")
