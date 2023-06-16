@@ -1,10 +1,10 @@
 import motor.motor_asyncio
-from info import AUTH_CHANNEL, DATABASE_URI
+from info import AUTH_CHANNEL, REQ_DB
 
 class Fsub_DB:
     
     def __init__(self):
-        self.client = motor.motor_asyncio.AsyncIOMotorClient(DATABASE_URI)
+        self.client = motor.motor_asyncio.AsyncIOMotorClient(REQ_DB)
         self.db = self.client["Fsub_DB"]
         self.col = self.db[str(AUTH_CHANNEL)]
 

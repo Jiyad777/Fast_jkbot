@@ -51,7 +51,7 @@ async def start(client, message):
             InlineKeyboardButton('𝗖𝗛𝗔𝗡𝗡𝗘𝗟✅', url='https://t.me/+f16LP7YW2G03MzM1'),
             InlineKeyboardButton('𝗦𝗨𝗕-𝗖𝗛𝗔𝗡𝗡𝗘𝗟➕', url='https://t.me/+jSlewUNeDk9lNmJl')
             ],[
-            InlineKeyboardButton('𝗛𝗘𝗟𝗣🤚', 'movss'),
+            InlineKeyboardButton('𝗛𝗘𝗟𝗣🤚', callaback_data='help'),
             InlineKeyboardButton('𝐎𝐖𝐍𝐄𝐑👤', url='http://t.me/JK_SER')
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
@@ -75,7 +75,7 @@ async def start(client, message):
             InlineKeyboardButton('𝗖𝗛𝗔𝗡𝗡𝗘𝗟✅', url='https://t.me/+f16LP7YW2G03MzM1'),
             InlineKeyboardButton('𝗦𝗨𝗕-𝗖𝗛𝗔𝗡𝗡𝗘𝗟➕', url='https://t.me/+jSlewUNeDk9lNmJl')
             ],[
-            InlineKeyboardButton('𝗛𝗘𝗟𝗣🤚', 'movss'),
+            InlineKeyboardButton('𝗛𝗘𝗟𝗣🤚', callback_data='help'),
             InlineKeyboardButton('𝐎𝐖𝐍𝐄𝐑👤', url='http://t.me/JK_SER')
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
@@ -134,7 +134,7 @@ async def start(client, message):
         protect_content=True if pre == 'filep' else False,
         )
             except FloodWait as e:
-                await asyncio.sleep(e.x)
+                await asyncio.sleep(e.value)
                 logger.warning(f"Floodwait of {e.x} sec.")
                 await client.send_cached_media(
                     chat_id=message.from_user.id,
@@ -174,7 +174,7 @@ async def start(client, message):
                 try:
                     await msg.copy(message.chat.id, caption=f_caption, protect_content=True if protect == "/pbatch" else False)
                 except FloodWait as e:
-                    await asyncio.sleep(e.x)
+                    await asyncio.sleep(e.value)
                     await msg.copy(message.chat.id, caption=f_caption, protect_content=True if protect == "/pbatch" else False)
                 except Exception as e:
                     logger.exception(e)
@@ -185,7 +185,7 @@ async def start(client, message):
                 try:
                     await msg.copy(message.chat.id, protect_content=True if protect == "/pbatch" else False)
                 except FloodWait as e:
-                    await asyncio.sleep(e.x)
+                    await asyncio.sleep(e.value)
                     await msg.copy(message.chat.id, protect_content=True if protect == "/pbatch" else False)
                 except Exception as e:
                     logger.exception(e)
@@ -278,7 +278,7 @@ async def channel_info(bot, message):
 async def log_file(bot, message):
     """Send log file"""
     try:
-        await message.reply_document('TelegramBot.log')
+        await message.reply_document('logs.txt')
     except Exception as e:
         await message.reply(str(e))
 

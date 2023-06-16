@@ -48,32 +48,15 @@ async def Force_Sub(bot: Client, message: Message, file_id = False, mode = "chec
             return True
     except Exception as e:
         print(f"Error: {e}")
-        await message.reply(
-            text=f"Error: {e}",
-            parse_mode=enums.ParseMode.MARKDOWN,
-            disable_web_page_preview=True
-        )
+        await message.reply(text=f"Error: {e}", parse_mode=enums.ParseMode.MARKDOWN, disable_web_page_preview=True)
         return False
     try:
-        await bot.get_chat_member(
-            chat_id=AUTH_CHANNEL,
-            user_id=message.from_user.id
-        )
+        await bot.get_chat_member(chat_id=AUTH_CHANNEL, user_id=message.from_user.id)
         return True
     except UserNotParticipant:
-        btn = [
-                [
-                InlineKeyboardButton("❆ Jᴏɪɴ Oᴜʀ Bᴀᴄᴋ-Uᴘ Cʜᴀɴɴᴇʟ ❆", url=link.invite_link)
-            ]
-        ]
-        if file_id != False:
-            btn.append([InlineKeyboardButton("↻ Tʀʏ Aɢᴀɪɴ", callback_data=f"{mode}#{file_id}")])
-        else:
-            pass
-
-        await message.reply(
-            text="**You are not in our Back-up channel given below so you don't get the movie file...\n\nIf you want the movie file, click on the '🍿ᴊᴏɪɴ ᴏᴜʀ ʙᴀᴄᴋ-ᴜᴘ ᴄʜᴀɴɴᴇʟ🍿' button below and join our back-up channel, then click on the '🔄 Try Again' button below...\n\nThen you will get the movie files...**",
-            reply_markup=InlineKeyboardMarkup(btn),
-            parse_mode=enums.ParseMode.MARKDOWN
-        )
+        btn = [[InlineKeyboardButton("❆ Jᴏɪɴ Oᴜʀ Bᴀᴄᴋ-Uᴘ Cʜᴀɴɴᴇʟ ❆", url=link.invite_link)]]
+        if file_id != False: btn.append([InlineKeyboardButton("↻ Tʀʏ Aɢᴀɪɴ", callback_data=f"{mode}#{file_id}")])
+        else: pass
+        txt="**You are not in our Back-up channel given below so you don't get the movie file...\n\nIf you want the movie file, click on the '🍿ᴊᴏɪɴ ᴏᴜʀ ʙᴀᴄᴋ-ᴜᴘ ᴄʜᴀɴɴᴇʟ🍿' button below and join our back-up channel, then click on the '🔄 Try Again' button below...\n\nThen you will get the movie files...**",
+        await message.reply(text=txt, reply_markup=InlineKeyboardMarkup(btn), parse_mode=enums.ParseMode.MARKDOWN)
         return False

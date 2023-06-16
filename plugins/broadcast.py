@@ -1,47 +1,52 @@
-
 from pyrogram import Client, filters
-import datetime
-import time
+import datetime, asyncio, time
 from database.users_chats_db import db
 from info import ADMINS
-from utils import broadcast_messages
-import asyncio
+
+lock = asyncio.Lock()
         
 @Client.on_message(filters.command("broadcast") & filters.user(ADMINS) & filters.reply)
-async def verupikkals(bot, message):
-    users = await db.get_all_users()
-    b_msg = message.reply_to_message
-    sts = await message.reply_text(
-        text='Broadcasting your messages...'
-    )
-    start_time = time.time()
+async def broadcast(bot, message):
+    if lock.locked():
+        await message.reply_message("already old broadcast is pending")
+    all_users = await db.get_all_users()
     total_users = await db.total_users_count()
+    b_msg = message.reply_to_message
+    sts = await message.reply_text('Broadcasting your messages...')
+    users = []
+    async for i in all_users:
+        users.append(str(i['id']))
     done = 0
     blocked = 0
     deleted = 0
     failed =0
-
     success = 0
-    #temp = 0 # temp var
-    #async with lock:
-    async for user in users:
-            #if temp == 26: # after 25 msgs
-                #await sts.edit(f"Broadcast in progress:\n\nTotal Users {total_users}\nCompleted: {done} / {total_users}\nSuccess: {success}\nBlocked: {blocked}\nDeleted: {deleted}\n\nSleeping for 2 seconds !") # editing msg
-                #await asyncio.sleep(2) # sleeping for 2 seconds 😴
-                #temp = 0 # resetting temp 
-            pti, sh = await broadcast_messages(int(user['id']), b_msg)
-            if pti:
+    start_time = time.time()
+    async with lock:
+        async for user in users:
+            try:
+                await b_msg.copy(chat_id=int(user))
                 success += 1
-            elif pti == False:
-                if sh == "Blocked":
-                    blocked+=1
-                elif sh == "Deleted":
-                    deleted += 1
-                elif sh == "Error":
-                    failed += 1
-            done += 1
-            #temp +=1 # incrementing with 1
-            #if not done % 20:
-                #await sts.edit(f"Broadcast in progress:\n\nTotal Users {total_users}\nCompleted: {done} / {total_users}\nSuccess: {success}\nBlocked: {blocked}\nDeleted: {deleted}")    
+            except FloodWait as e:
+                await asyncio.sleep(e.value)
+                await b_msg.copy(chat_id=int(user))
+                success += 1
+            except InputUserDeactivated:
+                await db.delete_user(int(user))
+                deleted += 1
+            except UserIsBlocked:
+                blocked += 1
+            except PeerIdInvalid:
+                await db.delete_user(int(int(user)))
+                failed += 1
+            except Exception as e:
+                failed += 1
+            try: users.pop(user)
+            except: pass
     time_taken = datetime.timedelta(seconds=int(time.time()-start_time))
-    await sts.edit(f"Broadcast Completed:\nCompleted in {time_taken} seconds.\n\nTotal Users {total_users}\nCompleted: {done} / {total_users}\nSuccess: {success}\nBlocked: {blocked}\nDeleted: {deleted}")
+    await sts.delete()
+    await message.reply_text(f"Broadcast Completed:\nCompleted in {time_taken} seconds.\n\nTotal Users {total_users}\nCompleted: {done} / {total_users}\nSuccess: {success}\nBlocked: {blocked}\nDeleted: {deleted}")
+
+
+
+
