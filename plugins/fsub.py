@@ -1,7 +1,7 @@
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, ChatJoinRequest
 from pyrogram import Client, enums, filters
 from pyrogram.errors import UserNotParticipant
-from info import AUTH_CHANNEL, ADMINS
+from info import AUTH_CHANNEL, ADMINS, REQ_LINK
 from database.fsub_db import Fsub_DB
 
 LINK = None
@@ -26,22 +26,24 @@ async def delete_all_reqs(bot, message):
     return await message.reply_text(f"<b>Successfully deleted all {total} requests...</b>")
 
 async def Force_Sub(bot: Client, message: Message, file_id = False, mode = "checksub"):
-    global LINK
-    if not AUTH_CHANNEL:
-        return True
-    try:
-        if LINK == None:
-            link = await bot.create_chat_invite_link(
-                chat_id=AUTH_CHANNEL,
-                creates_join_request=True
-            )
-            LINK = link
-            print("Created Invite Link !")
-        else:
-            link = LINK
-    except Exception as e:
-        print(f"Unable to create Invite link !\n\nError: {e}")
-        return False
+    if not AUTH_CHANNEL: return True
+    
+    if not REQ_LINK or REQ_LINK == "":
+        global LINK
+        try:
+            if LINK == None:
+                ln = await bot.create_chat_invite_link(chat_id=AUTH_CHANNEL, creates_join_request=True)
+                LINK = link.invite_link
+                link = link.invite_link
+                print("Created Invite Link !")
+            else:
+                link = LINK
+            
+        except Exception as e:
+            print(f"Unable to create Invite link !\n\nError: {e}")
+            return False
+    else:
+        link = REQ_LINK
     try:
         user = await Fsub_DB().get_user(str(message.from_user.id))
         if user and str(user["id"]) == str(message.from_user.id):
@@ -54,7 +56,7 @@ async def Force_Sub(bot: Client, message: Message, file_id = False, mode = "chec
         await bot.get_chat_member(chat_id=AUTH_CHANNEL, user_id=message.from_user.id)
         return True
     except UserNotParticipant:
-        btn = [[InlineKeyboardButton("❆ Jᴏɪɴ Oᴜʀ Bᴀᴄᴋ-Uᴘ Cʜᴀɴɴᴇʟ ❆", url=link.invite_link)]]
+        btn = [[InlineKeyboardButton("❆ Jᴏɪɴ Oᴜʀ Bᴀᴄᴋ-Uᴘ Cʜᴀɴɴᴇʟ ❆", url=link)]]
         if file_id != False: btn.append([InlineKeyboardButton("↻ Tʀʏ Aɢᴀɪɴ", callback_data=f"{mode}#{file_id}")])
         else: pass
         txt="**You are not in our Back-up channel given below so you don't get the movie file...\n\nIf you want the movie file, click on the '🍿ᴊᴏɪɴ ᴏᴜʀ ʙᴀᴄᴋ-ᴜᴘ ᴄʜᴀɴɴᴇʟ🍿' button below and join our back-up channel, then click on the '🔄 Try Again' button below...\n\nThen you will get the movie files...**",

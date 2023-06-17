@@ -26,6 +26,10 @@
             "description": "ID of channel.Make sure bot is admin in this channel. Without subscribing this channel users cannot use bot.",
             "required": false
         },
+        "REQ_LINK": {
+            "description": "optional: add request link if your channel is public? to skil this",
+            "required": false
+        },
         "AUTH_GROUPS": {
             "description": "Auth group add if group id bot will working only that group",
             "required": false 
