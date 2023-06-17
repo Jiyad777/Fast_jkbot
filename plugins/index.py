@@ -100,7 +100,7 @@ async def index_files_to_db(lst_msg_id, chat, msg, bot):
                 if current % 50 == 0:
                     try:
                         await msg.edit(text=f"Total messages fetched: <code>{current}</code>\nTotal messages saved: <code>{total_files}</code>\nDuplicate Files Skipped: <code>{duplicate}</code>\nDeleted Messages Skipped: <code>{deleted}</code>\nNon-Media messages skipped: <code>{no_media + unsupported}</code>(Unsupported Media - `{unsupported}` )\nErrors Occurred: <code>{errors}</code>", reply_markup=InlineKeyboardMarkup[[InlineKeyboardButton('Cancel', callback_data='index_cancel')]])                          
-                    except: FloodWait as t:
+                    except FloodWait as t:
                         await asyncio.sleep(t.value)
                         await msg.edit(text=f"Total messages fetched: <code>{current}</code>\nTotal messages saved: <code>{total_files}</code>\nDuplicate Files Skipped: <code>{duplicate}</code>\nDeleted Messages Skipped: <code>{deleted}</code>\nNon-Media messages skipped: <code>{no_media + unsupported}</code>(Unsupported Media - `{unsupported}` )\nErrors Occurred: <code>{errors}</code>", reply_markup=InlineKeyboardMarkup[[InlineKeyboardButton('Cancel', callback_data='index_cancel')]])                          
                     except Exception as e:
