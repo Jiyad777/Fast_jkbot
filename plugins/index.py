@@ -61,11 +61,11 @@ async def send_for_index(bot, message):
     try: k = await bot.get_messages(chat_id, last_msg_id)
     except: return await message.reply('Make Sure That Iam An Admin In The Channel, if channel is private')
     if k.empty: return await message.reply('This may be group and iam not a admin of the group.')
-    buttons = InlineKeyboardMarkup[[
+    buttons = InlineKeyboardMarkup([[
         InlineKeyboardButton('Yes', callback_data=f'index#{chat_id}#{last_msg_id}')
         ],[
         InlineKeyboardButton('close', callback_data='close_data'),
-    ]]
+    ]])
     return await message.reply( f'Do you Want To Index This Channel/ Group ?\n\nChat ID/ Username: <code>{chat_id}</code>\nLast Message ID: <code>{last_msg_id}</code>', reply_markup=buttons)
 
     
@@ -99,10 +99,10 @@ async def index_files_to_db(lst_msg_id, chat, msg, bot):
                 current += 1
                 if current % 50 == 0:
                     try:
-                        await msg.edit(text=f"Total messages fetched: <code>{current}</code>\nTotal messages saved: <code>{total_files}</code>\nDuplicate Files Skipped: <code>{duplicate}</code>\nDeleted Messages Skipped: <code>{deleted}</code>\nNon-Media messages skipped: <code>{no_media + unsupported}</code>(Unsupported Media - `{unsupported}` )\nErrors Occurred: <code>{errors}</code>", reply_markup=InlineKeyboardMarkup[[InlineKeyboardButton('Cancel', callback_data='index_cancel')]])                          
+                        await msg.edit(text=f"Total messages fetched: <code>{current}</code>\nTotal messages saved: <code>{total_files}</code>\nDuplicate Files Skipped: <code>{duplicate}</code>\nDeleted Messages Skipped: <code>{deleted}</code>\nNon-Media messages skipped: <code>{no_media + unsupported}</code>(Unsupported Media - `{unsupported}` )\nErrors Occurred: <code>{errors}</code>", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton('Cancel', callback_data='index_cancel')]]))                         
                     except FloodWait as t:
                         await asyncio.sleep(t.value)
-                        await msg.edit(text=f"Total messages fetched: <code>{current}</code>\nTotal messages saved: <code>{total_files}</code>\nDuplicate Files Skipped: <code>{duplicate}</code>\nDeleted Messages Skipped: <code>{deleted}</code>\nNon-Media messages skipped: <code>{no_media + unsupported}</code>(Unsupported Media - `{unsupported}` )\nErrors Occurred: <code>{errors}</code>", reply_markup=InlineKeyboardMarkup[[InlineKeyboardButton('Cancel', callback_data='index_cancel')]])                          
+                        await msg.edit(text=f"Total messages fetched: <code>{current}</code>\nTotal messages saved: <code>{total_files}</code>\nDuplicate Files Skipped: <code>{duplicate}</code>\nDeleted Messages Skipped: <code>{deleted}</code>\nNon-Media messages skipped: <code>{no_media + unsupported}</code>(Unsupported Media - `{unsupported}` )\nErrors Occurred: <code>{errors}</code>", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton('Cancel', callback_data='index_cancel')]]))                         
                     except Exception as e:
                         logger.exception(e)
                 if message.empty:
