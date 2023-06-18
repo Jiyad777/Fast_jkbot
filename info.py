@@ -31,6 +31,7 @@ auth_grp = environ.get('AUTH_GROUP')
 REQ_LINK = environ.get("REQ_LINK")
 AUTH_CHANNEL = int(auth_channel) if auth_channel and id_pattern.search(auth_channel) else None
 AUTH_GROUPS = [int(ch) for ch in auth_grp.split()] if auth_grp else None
+FSUB_TEXT = environ.get("FSUB_TEXT", "**You are not in our Back-up channel given below so you don't get the movie file...\n\nIf you want the movie file, click on the '🍿ᴊᴏɪɴ ᴏᴜʀ ʙᴀᴄᴋ-ᴜᴘ ᴄʜᴀɴɴᴇʟ🍿' button below and join our back-up channel, then click on the '🔄 Try Again' button below...\n\nThen you will get the movie files...**")
 
 # MongoDB information
 DATABASE_URI = environ.get('DATABASE_URI', "mongodb+srv://DB:DB@cluster0.xjvlb9h.mongodb.net/?retryWrites=true&w=majority")
