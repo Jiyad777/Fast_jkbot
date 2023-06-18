@@ -1,7 +1,7 @@
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, ChatJoinRequest
 from pyrogram import Client, enums, filters
 from pyrogram.errors import UserNotParticipant
-from info import AUTH_CHANNEL, ADMINS, REQ_LINK
+from info import FSUB_TEXT, AUTH_CHANNEL, ADMINS, REQ_LINK
 from database.fsub_db import Fsub_DB
 
 LINK = None
@@ -58,7 +58,6 @@ async def Force_Sub(bot: Client, message: Message, file_id = False, mode = "chec
     except UserNotParticipant:
         btn = [[InlineKeyboardButton("❆ Jᴏɪɴ Oᴜʀ Bᴀᴄᴋ-Uᴘ Cʜᴀɴɴᴇʟ ❆", url=link)]]
         if file_id != False: btn.append([InlineKeyboardButton("↻ Tʀʏ Aɢᴀɪɴ", callback_data=f"{mode}#{file_id}")])
-        else: pass
-        txt="**You are not in our Back-up channel given below so you don't get the movie file...\n\nIf you want the movie file, click on the '🍿ᴊᴏɪɴ ᴏᴜʀ ʙᴀᴄᴋ-ᴜᴘ ᴄʜᴀɴɴᴇʟ🍿' button below and join our back-up channel, then click on the '🔄 Try Again' button below...\n\nThen you will get the movie files...**",
-        await message.reply(text=txt, reply_markup=InlineKeyboardMarkup(btn), parse_mode=enums.ParseMode.MARKDOWN)
+        else: pass       
+        await message.reply(text=FSUB_TEXT, reply_markup=InlineKeyboardMarkup(btn), parse_mode=enums.ParseMode.MARKDOWN)
         return False
