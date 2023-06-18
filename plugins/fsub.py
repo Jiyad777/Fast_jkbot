@@ -33,8 +33,8 @@ async def Force_Sub(bot: Client, message: Message, file_id = False, mode = "chec
         try:
             if LINK == None:
                 ln = await bot.create_chat_invite_link(chat_id=AUTH_CHANNEL, creates_join_request=True)
-                LINK = link.invite_link
-                link = link.invite_link
+                LINK = ln.invite_link
+                link = ln.invite_link
                 print("Created Invite Link !")
             else:
                 link = LINK
