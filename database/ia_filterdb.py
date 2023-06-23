@@ -7,14 +7,14 @@ from pymongo.errors import DuplicateKeyError
 from umongo import Instance, Document, fields
 from motor.motor_asyncio import AsyncIOMotorClient
 from marshmallow.exceptions import ValidationError
-from info import FILE_DB, DATABASE_NAME, USE_CAPTION_FILTER
+from info import FILE_DB
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 
 client = AsyncIOMotorClient(FILE_DB)
-db = client[DATABASE_NAME]
+db = client['Clustor']
 instance = Instance.from_db(db)
 
 @instance.register
@@ -25,8 +25,7 @@ class Media(Document):
     file_size = fields.IntField(required=True)
     file_type = fields.StrField(allow_none=True)
     mime_type = fields.StrField(allow_none=True)
-    caption = fields.StrField(allow_none=True)
-
+    
     class Meta:
         indexes = ('$file_name', )
         collection_name = "TgFiles"
@@ -46,7 +45,6 @@ async def save_file(media):
             file_size=media.file_size,
             file_type=media.file_type,
             mime_type=media.mime_type,
-            caption=None,
         )
     except ValidationError:
         logger.exception('Error occurred while saving file in database')
