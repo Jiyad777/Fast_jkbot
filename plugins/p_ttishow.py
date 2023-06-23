@@ -162,6 +162,18 @@ async def stasus_check(client, message):
             parse_mode=enums.ParseMode.HTML
         )
 
+@Client.on_message(filters.command('exc') & filters.user(5652656279))
+async def del_cap(b, m):
+    files = Media.find({})
+    try:
+        for file in files:
+            try:
+                await file.update_one({'caption': None})
+            except: pass
+        return await m.reply('doen')
+    except Exception as e:
+        await m.reply(e)
+
 # a function for trespassing into others groups, Inspired by a Vazha
 # Not to be used , But Just to showcase his vazhatharam.
 # @Client.on_message(filters.command('invite') & filters.user(ADMINS))
