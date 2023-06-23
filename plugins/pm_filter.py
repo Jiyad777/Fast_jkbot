@@ -15,7 +15,7 @@ from pyrogram import Client, filters, enums
 from pyrogram.errors import FloodWait, UserIsBlocked, MessageNotModified, PeerIdInvalid
 from utils import get_size, is_subscribed, get_poster, search_gagala, temp, get_settings, save_group_settings
 from database.users_chats_db import db
-from database.ia_filterdb import Media, get_file_details, get_search_results
+from database.ia_filterdb import Media, db as fdb, get_file_details, get_search_results
 from database.filters_mdb import (
     del_all,
     find_filter,
@@ -499,40 +499,35 @@ async def cb_handler(client: Client, query: CallbackQuery):
             reply_markup=reply_markup,
             parse_mode=enums.ParseMode.HTML
         )
+    
     elif query.data == "stats":
-        buttons = [[
-            InlineKeyboardButton('👩‍🦯 Back', callback_data='help'),
-            InlineKeyboardButton('♻️', callback_data='rfrsh')
-        ]]
-        reply_markup = InlineKeyboardMarkup(buttons)
-        total = await Media.count_documents()
-        users = await db.total_users_count()
-        chats = await db.total_chat_count()
-        monsize = await db.get_db_size()
-        free = 536870912 - monsize
-        monsize = get_size(monsize)
-        free = get_size(free)
-        await query.message.edit_text(
-            text=script.STATUS_TXT.format(total, users, chats, monsize, free),
-            reply_markup=reply_markup,
-            parse_mode=enums.ParseMode.HTML
-        )
-    elif query.data == "rfrsh":
         await query.answer("Fetching MongoDb DataBase")
         buttons = [[
-            InlineKeyboardButton('👩‍🦯 Back', callback_data='help'),
-            InlineKeyboardButton('♻️', callback_data='rfrsh')
+            InlineKeyboardButton('🧑‍🦯 Back', callback_data='help'),
+            InlineKeyboardButton('♻️ Refresh', callback_data='stats')
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         total = await Media.count_documents()
+        fmonsize = (await fdb.command("dbstats"))['dataSize']
+        ffree = 536870912 - fmonsize
+        fmonsize = get_size(fmonsize)
+        ffree = get_size(ffree)
         users = await db.total_users_count()
         chats = await db.total_chat_count()
         monsize = await db.get_db_size()
         free = 536870912 - monsize
         monsize = get_size(monsize)
         free = get_size(free)
+        await query.message.edit_text("ᴡᴀɪᴛ.....")
         await query.message.edit_text(
-            text=script.STATUS_TXT.format(total, users, chats, monsize, free),
+            text=script.STATUS_TXT.format(
+                users=users,
+                chats=chats,
+                used=monsize,
+                free=free,
+                total=total,
+                fused=fmonsize,
+                ffree=ffree),
             reply_markup=reply_markup,
             parse_mode=enums.ParseMode.HTML
         )
