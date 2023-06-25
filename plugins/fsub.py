@@ -8,6 +8,7 @@ LINK = None
 
 @Client.on_chat_join_request(filters.chat(AUTH_CHANNEL))
 async def filter_join_reqs(bot, message: ChatJoinRequest):
+    if message.chat.type != enums.ChatType.PRIVATE: return 
     user_id = message.from_user.id
     username = message.from_user.username
     first_name = message.from_user.first_name
