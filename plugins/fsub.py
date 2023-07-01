@@ -8,12 +8,14 @@ LINK = None
 
 @Client.on_chat_join_request(filters.chat(AUTH_CHANNEL))
 async def filter_join_reqs(bot, message: ChatJoinRequest):
-    if message.chat.type != enums.ChatType.PRIVATE: return 
-    user_id = message.from_user.id
-    username = message.from_user.username
-    first_name = message.from_user.first_name
-    date = message.date
-    await Fsub_DB().add_user(user_id=str(user_id), username=username, first_name=first_name, date=date)
+    if message.chat.username is None: 
+        user_id = message.from_user.id
+        username = message.from_user.username
+        first_name = message.from_user.first_name
+        date = message.date
+        await Fsub_DB().add_user(user_id=str(user_id), username=username, first_name=first_name, date=date)
+    else:
+        return 
 
 @Client.on_message(filters.command("total_requests") & filters.private & filters.user(ADMINS))
 async def get_all_reqs(bot, message):
