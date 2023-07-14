@@ -1,4 +1,5 @@
 from pyrogram import Client, filters
+from pyrogram.errors import InputUserDeactivated, FloodWait, UserIsBlocked, PeerIdInvalid     
 import datetime, asyncio, time
 from database.users_chats_db import db
 from info import ADMINS
@@ -16,7 +17,7 @@ async def broadcast(bot, message):
     done = 0
     blocked = 0
     deleted = 0
-    failed =0
+    failed = 0
     success = 0
     start_time = time.time()
     async with lock:
@@ -40,7 +41,7 @@ async def broadcast(bot, message):
             except Exception as e:
                 failed += 1
             done += 1
-            if not done % 20:
+            if not done % 50:
                 await sts.edit_text(f"Broadcast In Progress:\n\nTotal Users {total_users}\nCompleted: {done} / {total_users}\nSuccess: {success}\nBlocked: {blocked}\nDeleted: {deleted}")                 
     time_taken = datetime.timedelta(seconds=int(time.time()-start_time))
     await sts.delete()
