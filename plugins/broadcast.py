@@ -20,7 +20,7 @@ async def broadcast(bot, message):
     success = 0
     start_time = time.time()
     async with lock:
-        async for i in users:
+        async for i in all_users:
             user = i['id']
             try:
                 await b_msg.copy(chat_id=int(user))
