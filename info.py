@@ -37,7 +37,7 @@ FSUB_TEXT = environ.get("FSUB_TEXT", "**You are not in our Back-up channel given
 DATABASE_URI = environ.get('DATABASE_URI', "mongodb+srv://DB:DB@cluster0.xjvlb9h.mongodb.net/?retryWrites=true&w=majority")
 DATABASE_NAME = environ.get('DATABASE_NAME', "Cluster")
 
-FILE_DB = environ.get('FILE_DB', "mongodb+srv://FL:FL@cluster0.bxxthay.mongodb.net/?retryWrites=true&w=majority")
+FILE_DB = environ.get('FILE_DB', "mongodb+srv://jiyad:jiyad@cluster0.tir5gla.mongodb.net/?retryWrites=true&w=majority")
 FILTER_DB = environ.get('FILTER_DB', "mongodb+srv://FILTER:FILTER@cluster0.jd4akt7.mongodb.net/?retryWrites=true&w=majority")
 REQ_DB = environ.get('REQ_DB', "mongodb+srv://REQ:REQ@cluster0.jngo7x2.mongodb.net/?retryWrites=true&w=majority")
 
