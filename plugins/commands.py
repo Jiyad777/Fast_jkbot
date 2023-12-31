@@ -45,8 +45,8 @@ async def start(client, message):
         buttons = [[
             InlineKeyboardButton('「ＪＫ ＭＯＶＩＥＳ™」', url=f'http://t.me/{temp.U_NAME}?startgroup=true')
             ],[
-            InlineKeyboardButton('𝗚𝗥𝗢𝗨𝗣👥', url='https://t.me/+iiJvauon_6Q1Njk1'),
-            InlineKeyboardButton('𝗦𝗨𝗕-𝗚𝗥𝗢𝗨𝗣➕', url='https://t.me/+eR4hv5tiHy80NTQ1')
+            InlineKeyboardButton('𝗚𝗥𝗢𝗨𝗣👥', url='https://t.me/+70QWqs3vcs01MDM1'),
+            InlineKeyboardButton('𝗦𝗨𝗕-𝗚𝗥𝗢𝗨𝗣➕', url='https://t.me/+3J3rzCr6wygwZDc1')
             ],[
             InlineKeyboardButton('𝗖𝗛𝗔𝗡𝗡𝗘𝗟✅', url='https://t.me/+mEL_a9B3unU2MWJl'),
             InlineKeyboardButton('𝗦𝗨𝗕-𝗖𝗛𝗔𝗡𝗡𝗘𝗟➕', url='https://t.me/+t6TtdN25vus5YzQ9')
@@ -69,8 +69,8 @@ async def start(client, message):
         buttons = [[
             InlineKeyboardButton('「ＪＫ ＭＯＶＩＥＳ™」', url=f'http://t.me/{temp.U_NAME}?startgroup=true')
             ],[
-            InlineKeyboardButton('𝗚𝗥𝗢𝗨𝗣👥', url='https://t.me/+iiJvauon_6Q1Njk1'),
-            InlineKeyboardButton('𝗦𝗨𝗕-𝗚𝗥𝗢𝗨𝗣➕', url='https://t.me/+eR4hv5tiHy80NTQ1')
+            InlineKeyboardButton('𝗚𝗥𝗢𝗨𝗣👥', url='https://t.me/+70QWqs3vcs01MDM1'),
+            InlineKeyboardButton('𝗦𝗨𝗕-𝗚𝗥𝗢𝗨𝗣➕', url='https://t.me/+3J3rzCr6wygwZDc1')
             ],[
             InlineKeyboardButton('𝗖𝗛𝗔𝗡𝗡𝗘𝗟✅', url='https://t.me/+mEL_a9B3unU2MWJl'),
             InlineKeyboardButton('𝗦𝗨𝗕-𝗖𝗛𝗔𝗡𝗡𝗘𝗟➕', url='https://t.me/+t6TtdN25vus5YzQ9')
