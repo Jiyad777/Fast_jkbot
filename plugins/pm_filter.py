@@ -332,7 +332,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         chat_id=message.from_user.id,
         file_id=file_id,
         caption=f_caption,
-        reply_markup=InlineKeyboardMarkup( [ [ InlineKeyboardButton('𝙳𝙴𝚅𝙴𝙻𝙾𝙿𝙴𝚁 👑', url='T.me/Jk_Ser'),
+        reply_markup=InlineKeyboardMarkup( [ [ InlineKeyboardButton('𝙳𝙴𝚅𝙴𝙻𝙾𝙿𝙴𝚁 👑', url='T.me/Jk_Serr'),
                                               InlineKeyboardButton('𝙹𝙾𝙸𝙽 𝙼𝙰𝙸𝙽 𝙲𝙷𝙰𝙽𝙽𝙴𝙻', url='https://t.me/+7LkiblDWkCgwNDU1') ] ] ),                                           
         protect_content=True if pre == 'filep' else False,
         )
@@ -385,7 +385,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             InlineKeyboardButton('𝗦𝗨𝗕-𝗖𝗛𝗔𝗡𝗡𝗘𝗟➕', url='https://t.me/+jSlewUNeDk9lNmJl')
             ],[
             InlineKeyboardButton('𝗛𝗘𝗟𝗣 🤚', callback_data='help'),
-            InlineKeyboardButton('𝐎𝐖𝐍𝐄𝐑👤', url='http://t.me/JK_SER')
+            InlineKeyboardButton('𝐎𝐖𝐍𝐄𝐑👤', url='http://t.me/JK_SERr')
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await query.message.edit_text(
@@ -664,7 +664,7 @@ async def auto_filter(client, msg, spoll=False):
             **locals()
         )
     else:
-        cap = f"Hello {message.from_user.mention} നിങ്ങൾ ഗ്രൂപ്പിൽ ചോദിച്ച {search} എന്ന സിനിമയുടെ ലിസ്റ്റ് താഴെ കൊടുത്തിട്ട് ഉണ്ട്. ആദ്യത്തെ ലിസ്റ്റിൽ ഇല്ലങ്കിൽ സിനിമ NEXT » ബട്ടൺ ക്ലിക്ക് ചെയ്തു അടുത്ത പേജ് കൂടെ നോക്കുക. #Press How To Download"
+        cap = f"Hello {message.from_user.mention} നിങ്ങൾ ഗ്രൂപ്പിൽ ചോദിച്ച {search} എന്ന സിനിമയുടെ ലിസ്റ്റ് താഴെ കൊടുത്തിട്ട് ഉണ്ട്. ആദ്യത്തെ ലിസ്റ്റിൽ ഇല്ലങ്കിൽ സിനിമ NEXT » ബട്ടൺ ക്ലിക്ക് ചെയ്തു അടുത്ത പേജ് കൂടെ നോക്കുക. #PRESS @JKMOVIES_GRP"
     if imdb and imdb.get('poster'):
         try:
             fmsg = await message.reply_photo('https://telegra.ph/file/2852538a958144259930b.jpg', caption=cap, reply_markup=InlineKeyboardMarkup(btn))
